@@ -1,0 +1,2 @@
+insert into reservacion (idCliente, nombreCliente, tipoVehiculo, fecha_inicio, fecha_fin, numero_dias, valor)
+values (:idCliente, :nombreCliente, :tipoVehiculo, :fechaInicio, :fechaFin, :numeroDias, :valor)

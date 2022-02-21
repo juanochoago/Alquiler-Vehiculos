@@ -1,0 +1,25 @@
+jasypt:
+   encryptor:
+      password: ${jasyptpwd:secretkey}
+      algorithm: PBEWithMD5AndDES
+
+server:
+   port: 9091
+   servlet:
+      context-path: /reservacion
+      session:
+         timeout: 21600s
+
+spring:
+   datasource:
+      driver-class-name: org.h2.Driver
+      type: com.zaxxer.hikari.HikariDataSource
+      jdbcUrl: jdbc:h2:mem:~/automoviles
+      username: admin
+      password: admin1
+      hikari:
+         poolName: pool
+   h2:
+      console:
+         enabled: true
+         path: /h2-console

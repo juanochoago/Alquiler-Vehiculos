@@ -1,0 +1,1 @@
+select count(0) from reservacion where idcliente= :idCliente and fecha_fin  >= :fechaFin
