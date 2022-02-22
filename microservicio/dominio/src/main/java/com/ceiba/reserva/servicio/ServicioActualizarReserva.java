@@ -29,7 +29,7 @@ public class ServicioActualizarReserva {
 
     private void validarExistenciaPrevia(Reserva reserva) {
         boolean existe = this.repositorioReserva.existePorId(reserva.getId());
-        if(!existe) {
+        if (!existe) {
             throw new ExcepcionDuplicidad(LA_RESERVA_NO_EXISTE_EN_EL_SISTEMA);
         }
     }
@@ -42,7 +42,7 @@ public class ServicioActualizarReserva {
     public Long calcularTarifa(Reserva reserva) {
         LocalDate fechaCalculo = reserva.getFechaInicio();
         Long tarifa = Long.valueOf(0);
-        Long tipoTarifa;
+        Long tipoTarifa = tarifaPorTipoVehiculo(reserva.getTipoVehiculo());
 
         switch (reserva.getTipoVehiculo()) {
             case 1:
@@ -67,5 +67,24 @@ public class ServicioActualizarReserva {
             fechaCalculo = fechaCalculo.plusDays(1);
         }
         return tarifa;
+    }
+
+    public Long tarifaPorTipoVehiculo(Integer tipoVehiculo) {
+        Long tipoTarifa;
+
+        switch (tipoVehiculo) {
+            case 1:
+                tipoTarifa = Long.valueOf(VALOR_DIA_AUTOMOVIL);
+                break;
+            case 2:
+                tipoTarifa = Long.valueOf(VALOR_DIA_CAMIONETA);
+                break;
+            case 3:
+                tipoTarifa = Long.valueOf(VALOR_DIA_VAN);
+                break;
+            default:
+                tipoTarifa = Long.valueOf(0);
+        }
+        return tipoTarifa;
     }
 }
