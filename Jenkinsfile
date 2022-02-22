@@ -34,7 +34,7 @@ pipeline {
 		checkout scm
       }
     }
-
+    
     stage('Compile & Unit Tests') {
       steps{
         echo "------------>Compile & Unit Tests<------------"
@@ -57,7 +57,7 @@ pipeline {
         echo "------------>Build<------------"
         sh './microservicio/gradlew --b ./microservicio/build.gradle build -x test'
       }
-    }
+    }  
   }
 
   post {
