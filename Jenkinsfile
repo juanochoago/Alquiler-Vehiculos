@@ -39,14 +39,15 @@ pipeline {
       steps{
         echo "------------>Compile & Unit Tests<------------"
 		sh 'chmod +x microservicio/gradlew'
-		sh 'microservicio/gradlew --b microservicio/build.gradle test'
+		sh './microservicio/gradlew --b ./microservicio/build.gradle clean'
+		sh './microservicio/gradlew --b microservicio/build.gradle test'
       }
     }
 
     stage('Static Code Analysis') {
         steps{
-            sonarqubeMasQualityGatesP(sonarKey:'co.com.ceiba.adn:[alquiler.vehiculos-juan.ochoa]',
-            sonarName:'CeibaADN-AlquilerVehiculos(juan.ochoa)',
+            sonarqubeMasQualityGatesP(sonarKey:'co.com.ceiba.adn:alquiler.vehiculos-juan.ochoa',
+            sonarName:'''"CeibaADN-AlquilerVehiculos(juan.ochoa)"''',
             sonarPathProperties:'./sonar-project.properties')
         }
     }
@@ -54,7 +55,7 @@ pipeline {
     stage('Build') {
       steps {
         echo "------------>Build<------------"
-        sh './gradlew --b ./build.gradle build -x test'
+        sh './microservicio/gradlew --b ./microservicio/build.gradle build -x test'
       }
     }  
   }
