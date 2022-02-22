@@ -9,6 +9,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.time.LocalDate;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class ServicioActualizarReservaTest {
 
     @Test
@@ -35,5 +39,65 @@ class ServicioActualizarReservaTest {
         servicioActualizarReserva.ejecutar(reserva);
         //assert
         Mockito.verify(repositorioReserva, Mockito.times(1)).actualizar(reserva);
+    }
+
+    @Test
+    @DisplayName("Deberia calcular tarifa Automovil")
+    void deberiaCalcularTarifaAutomovil() {
+        // arrange
+        LocalDate fechaInicio = LocalDate.now();
+        Reserva reserva = new ReservaTestDataBuilder().conTipoVehiculo(1).conNumeroDias(1).build();
+        RepositorioReserva repositorioReserva = Mockito.mock(RepositorioReserva.class);
+
+        ServicioActualizarReserva servicioActualizarReserva = new ServicioActualizarReserva(repositorioReserva);
+        // act
+        Long tarifa = servicioActualizarReserva.calcularTarifa(reserva);
+        //- assert
+        assertEquals(100000L, tarifa);
+    }
+
+    @Test
+    @DisplayName("Deberia calcular tarifa Camioneta")
+    void deberiaCalcularTarifaCamioneta() {
+        // arrange
+        LocalDate fechaInicio = LocalDate.now();
+        Reserva reserva = new ReservaTestDataBuilder().conTipoVehiculo(2).conNumeroDias(1).build();
+        RepositorioReserva repositorioReserva = Mockito.mock(RepositorioReserva.class);
+
+        ServicioActualizarReserva servicioActualizarReserva = new ServicioActualizarReserva(repositorioReserva);
+        // act
+        Long tarifa = servicioActualizarReserva.calcularTarifa(reserva);
+        //- assert
+        assertEquals(150000L, tarifa);
+    }
+
+    @Test
+    @DisplayName("Deberia calcular tarifa Automovil")
+    void deberiaCalcularTarifaVan() {
+        // arrange
+        LocalDate fechaInicio = LocalDate.now();
+        Reserva reserva = new ReservaTestDataBuilder().conTipoVehiculo(3).conNumeroDias(1).build();
+        RepositorioReserva repositorioReserva = Mockito.mock(RepositorioReserva.class);
+
+        ServicioActualizarReserva servicioActualizarReserva = new ServicioActualizarReserva(repositorioReserva);
+        // act
+        Long tarifa = servicioActualizarReserva.calcularTarifa(reserva);
+        //- assert
+        assertEquals(200000L, tarifa);
+    }
+
+    @Test
+    @DisplayName("No Deberia Calcular Tarifa")
+    void noDeberiaCalcularTarifa() {
+        // arrange
+        LocalDate fechaInicio = LocalDate.now();
+        Reserva reserva = new ReservaTestDataBuilder().conTipoVehiculo(4).conNumeroDias(1).build();
+        RepositorioReserva repositorioReserva = Mockito.mock(RepositorioReserva.class);
+
+        ServicioActualizarReserva servicioActualizarReserva = new ServicioActualizarReserva(repositorioReserva);
+        // act
+        Long tarifa = servicioActualizarReserva.calcularTarifa(reserva);
+        //- assert
+        assertEquals(0L, tarifa);
     }
 }
