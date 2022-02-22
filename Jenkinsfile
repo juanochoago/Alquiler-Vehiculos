@@ -34,7 +34,7 @@ pipeline {
 		checkout scm
       }
     }
-    
+
     stage('Compile & Unit Tests') {
       steps{
         echo "------------>Compile & Unit Tests<------------"
