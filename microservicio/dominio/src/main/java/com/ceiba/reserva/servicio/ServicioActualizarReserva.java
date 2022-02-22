@@ -44,20 +44,6 @@ public class ServicioActualizarReserva {
         Long tarifa = Long.valueOf(0);
         Long tipoTarifa = tarifaPorTipoVehiculo(reserva.getTipoVehiculo());
 
-        switch (reserva.getTipoVehiculo()) {
-            case 1:
-                tipoTarifa = Long.valueOf(VALOR_DIA_AUTOMOVIL);
-                break;
-            case 2:
-                tipoTarifa = Long.valueOf(VALOR_DIA_CAMIONETA);
-                break;
-            case 3:
-                tipoTarifa = Long.valueOf(VALOR_DIA_VAN);
-                break;
-            default:
-                tipoTarifa = Long.valueOf(0);
-        }
-
         for (int i = 0; i < reserva.getNumeroDias(); i++) {
             if (fechaCalculo.getDayOfWeek() == DayOfWeek.SATURDAY || fechaCalculo.getDayOfWeek() == DayOfWeek.SUNDAY) {
                 tarifa += tipoTarifa + ((30 * tipoTarifa) / 100);
