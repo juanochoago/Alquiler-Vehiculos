@@ -99,4 +99,34 @@ class ServicioCrearReservaTest {
         //- assert
         assertEquals(0L, tarifa);
     }
+
+    @Test
+    @DisplayName("Deberia calcular tarifa fin de semana")
+    void deberiaCalcularTarifaFinDeSemana() {
+        // arrange
+        LocalDate fecha = LocalDate.of(2022, 02, 26);
+        Reserva reserva = new ReservaTestDataBuilder().conTipoVehiculo(1).conNumeroDias(1).conFechaInicio(fecha).build();
+        RepositorioReserva repositorioReserva = Mockito.mock(RepositorioReserva.class);
+
+        ServicioCrearReserva servicioCrearReserva = new ServicioCrearReserva(repositorioReserva);
+        // act
+        Long tarifa = servicioCrearReserva.calcularTarifa(reserva);
+        //- assert
+        assertEquals(130000L, tarifa);
+    }
+
+    @Test
+    @DisplayName("Deberia calcular tarifa entre de semana")
+    void deberiaCalcularTarifaEntreSemana() {
+        // arrange
+        LocalDate fecha = LocalDate.of(2022, 02, 25);
+        Reserva reserva = new ReservaTestDataBuilder().conTipoVehiculo(1).conNumeroDias(1).conFechaInicio(fecha).build();
+        RepositorioReserva repositorioReserva = Mockito.mock(RepositorioReserva.class);
+
+        ServicioCrearReserva servicioCrearReserva = new ServicioCrearReserva(repositorioReserva);
+        // act
+        Long tarifa = servicioCrearReserva.calcularTarifa(reserva);
+        //- assert
+        assertEquals(100000L, tarifa);
+    }
 }

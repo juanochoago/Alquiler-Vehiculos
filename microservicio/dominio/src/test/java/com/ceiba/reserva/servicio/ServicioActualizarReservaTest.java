@@ -42,10 +42,9 @@ class ServicioActualizarReservaTest {
     }
 
     @Test
-    @DisplayName("Deberia calcular tarifa Automovil")
+    @DisplayName("Deberia calcular tarifa base automovil")
     void deberiaCalcularTarifaAutomovil() {
         // arrange
-        LocalDate fechaInicio = LocalDate.now();
         Reserva reserva = new ReservaTestDataBuilder().conTipoVehiculo(1).conNumeroDias(1).build();
         RepositorioReserva repositorioReserva = Mockito.mock(RepositorioReserva.class);
 
@@ -57,10 +56,9 @@ class ServicioActualizarReservaTest {
     }
 
     @Test
-    @DisplayName("Deberia calcular tarifa Camioneta")
+    @DisplayName("Deberia calcular tarifa base camioneta")
     void deberiaCalcularTarifaCamioneta() {
         // arrange
-        LocalDate fechaInicio = LocalDate.now();
         Reserva reserva = new ReservaTestDataBuilder().conTipoVehiculo(2).conNumeroDias(1).build();
         RepositorioReserva repositorioReserva = Mockito.mock(RepositorioReserva.class);
 
@@ -72,10 +70,9 @@ class ServicioActualizarReservaTest {
     }
 
     @Test
-    @DisplayName("Deberia calcular tarifa Automovil")
+    @DisplayName("Deberia calcular tarifa base van")
     void deberiaCalcularTarifaVan() {
         // arrange
-        LocalDate fechaInicio = LocalDate.now();
         Reserva reserva = new ReservaTestDataBuilder().conTipoVehiculo(3).conNumeroDias(1).build();
         RepositorioReserva repositorioReserva = Mockito.mock(RepositorioReserva.class);
 
@@ -87,10 +84,9 @@ class ServicioActualizarReservaTest {
     }
 
     @Test
-    @DisplayName("No Deberia Calcular Tarifa")
+    @DisplayName("No deberia calcular tarifa Base")
     void noDeberiaCalcularTarifa() {
         // arrange
-        LocalDate fechaInicio = LocalDate.now();
         Reserva reserva = new ReservaTestDataBuilder().conTipoVehiculo(4).conNumeroDias(1).build();
         RepositorioReserva repositorioReserva = Mockito.mock(RepositorioReserva.class);
 
@@ -99,5 +95,35 @@ class ServicioActualizarReservaTest {
         Long tarifa = servicioActualizarReserva.calcularTarifa(reserva);
         //- assert
         assertEquals(0L, tarifa);
+    }
+
+    @Test
+    @DisplayName("Deberia calcular tarifa fin de semana")
+    void deberiaCalcularTarifaFinDeSemana() {
+        // arrange
+        LocalDate fecha = LocalDate.of(2022, 02, 26);
+        Reserva reserva = new ReservaTestDataBuilder().conTipoVehiculo(1).conNumeroDias(1).conFechaInicio(fecha).build();
+        RepositorioReserva repositorioReserva = Mockito.mock(RepositorioReserva.class);
+
+        ServicioActualizarReserva servicioActualizarReserva = new ServicioActualizarReserva(repositorioReserva);
+        // act
+        Long tarifa = servicioActualizarReserva.calcularTarifa(reserva);
+        //- assert
+        assertEquals(130000L, tarifa);
+    }
+
+    @Test
+    @DisplayName("Deberia calcular tarifa entre de semana")
+    void deberiaCalcularTarifaEntreSemana() {
+        // arrange
+        LocalDate fecha = LocalDate.of(2022, 02, 25);
+        Reserva reserva = new ReservaTestDataBuilder().conTipoVehiculo(1).conNumeroDias(1).conFechaInicio(fecha).build();
+        RepositorioReserva repositorioReserva = Mockito.mock(RepositorioReserva.class);
+
+        ServicioActualizarReserva servicioActualizarReserva = new ServicioActualizarReserva(repositorioReserva);
+        // act
+        Long tarifa = servicioActualizarReserva.calcularTarifa(reserva);
+        //- assert
+        assertEquals(100000L, tarifa);
     }
 }
