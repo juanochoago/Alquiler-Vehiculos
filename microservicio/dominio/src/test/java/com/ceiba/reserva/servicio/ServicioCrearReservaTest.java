@@ -53,7 +53,7 @@ class ServicioCrearReservaTest {
 
         ServicioCrearReserva servicioCrearReserva = new ServicioCrearReserva(repositorioReserva);
         // act
-        Long tarifa = servicioCrearReserva.calcularTarifa(reserva);
+        Long tarifa = servicioCrearReserva.calculoTarifaTipoVehiculo(reserva);
         //- assert
         assertEquals(100000L, tarifa);
     }
@@ -67,7 +67,7 @@ class ServicioCrearReservaTest {
 
         ServicioCrearReserva servicioCrearReserva = new ServicioCrearReserva(repositorioReserva);
         // act
-        Long tarifa = servicioCrearReserva.calcularTarifa(reserva);
+        Long tarifa = servicioCrearReserva.calculoTarifaTipoVehiculo(reserva);
         //- assert
         assertEquals(150000L, tarifa);
     }
@@ -81,7 +81,7 @@ class ServicioCrearReservaTest {
 
         ServicioCrearReserva servicioCrearReserva = new ServicioCrearReserva(repositorioReserva);
         // act
-        Long tarifa = servicioCrearReserva.calcularTarifa(reserva);
+        Long tarifa = servicioCrearReserva.calculoTarifaTipoVehiculo(reserva);
         //- assert
         assertEquals(200000L, tarifa);
     }
@@ -95,7 +95,7 @@ class ServicioCrearReservaTest {
 
         ServicioCrearReserva servicioCrearReserva = new ServicioCrearReserva(repositorioReserva);
         // act
-        Long tarifa = servicioCrearReserva.calcularTarifa(reserva);
+        Long tarifa = servicioCrearReserva.calculoTarifaTipoVehiculo(reserva);
         //- assert
         assertEquals(0L, tarifa);
     }

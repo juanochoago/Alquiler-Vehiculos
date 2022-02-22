@@ -43,6 +43,20 @@ public class ServicioCrearReserva {
     public Long calcularTarifa(Reserva reserva) {
         LocalDate fechaCalculo = reserva.getFechaInicio();
         Long tarifa = Long.valueOf(0);
+        Long tipoTarifa = calculoTarifaTipoVehiculo(reserva);
+
+        for (int i = 0; i < reserva.getNumeroDias(); i++) {
+            if (fechaCalculo.getDayOfWeek() == DayOfWeek.SATURDAY || fechaCalculo.getDayOfWeek() == DayOfWeek.SUNDAY) {
+                tarifa += tipoTarifa + ((30 * tipoTarifa) / 100);
+            } else {
+                tarifa += tipoTarifa;
+            }
+            fechaCalculo = fechaCalculo.plusDays(1);
+        }
+        return tarifa;
+    }
+
+    public Long calculoTarifaTipoVehiculo(Reserva reserva) {
         Long tipoTarifa;
 
         switch (reserva.getTipoVehiculo()) {
@@ -58,15 +72,6 @@ public class ServicioCrearReserva {
             default:
                 tipoTarifa = Long.valueOf(0);
         }
-
-        for (int i = 0; i < reserva.getNumeroDias(); i++) {
-            if (fechaCalculo.getDayOfWeek() == DayOfWeek.SATURDAY || fechaCalculo.getDayOfWeek() == DayOfWeek.SUNDAY) {
-                tarifa += tipoTarifa + ((30 * tipoTarifa) / 100);
-            } else {
-                tarifa += tipoTarifa;
-            }
-            fechaCalculo = fechaCalculo.plusDays(1);
-        }
-        return tarifa;
+        return tipoTarifa;
     }
 }
