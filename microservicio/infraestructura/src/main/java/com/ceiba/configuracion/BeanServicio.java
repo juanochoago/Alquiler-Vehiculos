@@ -1,6 +1,6 @@
 package com.ceiba.configuracion;
 
-import com.ceiba.reserva.puerto.repositorio.RepositorioReserva;
+import com.ceiba.reserva.modelo.entidad.puerto.repositorio.RepositorioReserva;
 import com.ceiba.reserva.servicio.ServicioActualizarReserva;
 import com.ceiba.reserva.servicio.ServicioCrearReserva;
 import org.springframework.context.annotation.Bean;

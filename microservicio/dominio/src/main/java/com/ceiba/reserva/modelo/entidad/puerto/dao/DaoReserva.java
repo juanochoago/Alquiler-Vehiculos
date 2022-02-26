@@ -1,4 +1,4 @@
-package com.ceiba.reserva.puerto.dao;
+package com.ceiba.reserva.modelo.entidad.puerto.dao;
 
 import com.ceiba.reserva.modelo.dto.DtoReserva;
 

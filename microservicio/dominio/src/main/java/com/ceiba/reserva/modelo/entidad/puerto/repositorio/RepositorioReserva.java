@@ -1,4 +1,4 @@
-package com.ceiba.reserva.puerto.repositorio;
+package com.ceiba.reserva.modelo.entidad.puerto.repositorio;
 
 import com.ceiba.reserva.modelo.entidad.Reserva;
 
@@ -19,14 +19,16 @@ public interface RepositorioReserva {
     void actualizar(Reserva reserva);
 
     /**
-     * Permite validar si existe una reseva con un idCliente
+     * Permite validar si existe una reseva activa
      * @param idCliente
+     * @param fechaFin
      * @return si existe o no
      */
     boolean existe(Long idCliente, LocalDate fechaFin);
 
     /**
-     * Permite validar si existe una reserva con un nombre excluyendo un id
+     * Permite validar si existe una reserva en el sistema con id
+     * @param id
      * @return si existe o no
      */
     boolean existePorId(Long id);

@@ -2,7 +2,7 @@ package com.ceiba.reserva.servicio;
 
 import com.ceiba.dominio.excepcion.ExcepcionDuplicidad;
 import com.ceiba.reserva.modelo.entidad.Reserva;
-import com.ceiba.reserva.puerto.repositorio.RepositorioReserva;
+import com.ceiba.reserva.modelo.entidad.puerto.repositorio.RepositorioReserva;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;

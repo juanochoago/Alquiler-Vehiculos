@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/vehiculo")
+@CrossOrigin(origins = "http://localhost:4200")
 @Api(tags = {"Controlador comando reservas"})
 public class ComandoControladorReservas {
 

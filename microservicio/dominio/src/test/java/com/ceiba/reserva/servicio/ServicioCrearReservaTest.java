@@ -3,7 +3,7 @@ package com.ceiba.reserva.servicio;
 import com.ceiba.BasePrueba;
 import com.ceiba.dominio.excepcion.ExcepcionDuplicidad;
 import com.ceiba.reserva.modelo.entidad.Reserva;
-import com.ceiba.reserva.puerto.repositorio.RepositorioReserva;
+import com.ceiba.reserva.modelo.entidad.puerto.repositorio.RepositorioReserva;
 import com.ceiba.reserva.servicio.testdatabuilder.ReservaTestDataBuilder;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ class ServicioCrearReservaTest {
         Mockito.when(repositorioReserva.existe(Mockito.anyLong(), any(LocalDate.class))).thenReturn(true);
         ServicioCrearReserva servicioCrearReserva = new ServicioCrearReserva(repositorioReserva);
         // act - assert
-        BasePrueba.assertThrows(() -> servicioCrearReserva.ejecutar(reserva), ExcepcionDuplicidad.class, "La reserva ya existe en el sistema");
+        BasePrueba.assertThrows(() -> servicioCrearReserva.ejecutar(reserva), ExcepcionDuplicidad.class, "El cliente tiene una reserva activa actualmente");
     }
 
     @Test
