@@ -1,6 +1,7 @@
 package com.ceiba.reserva.servicio;
 
 import com.ceiba.dominio.excepcion.ExcepcionDuplicidad;
+import com.ceiba.dominio.excepcion.ExcepcionValorInvalido;
 import com.ceiba.reserva.modelo.entidad.Reserva;
 import com.ceiba.reserva.modelo.entidad.puerto.repositorio.RepositorioReserva;
 
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 public class ServicioCrearReserva {
 
     private static final String LA_RESERVA_YA_EXISTE_EN_EL_SISTEMA = "El cliente tiene una reserva activa actualmente";
+    private static final String TIPO_VEHICULO_INVALIDO = "Tipo de vehiculo no valido";
     private static final int VALOR_DIA_AUTOMOVIL = 100000;
     private static final int VALOR_DIA_CAMIONETA = 150000;
     private static final int VALOR_DIA_VAN = 200000;
@@ -23,8 +25,6 @@ public class ServicioCrearReserva {
 
     public Long ejecutar(Reserva reserva) {
         validarReservasActivas(reserva);
-        reserva.setFechaFin(calcularFechaFin(reserva));
-        reserva.setValor(calcularTarifa(reserva));
         return this.respositorioReserva.crear(reserva);
     }
 
@@ -33,45 +33,5 @@ public class ServicioCrearReserva {
         if (existe) {
             throw new ExcepcionDuplicidad(LA_RESERVA_YA_EXISTE_EN_EL_SISTEMA);
         }
-    }
-
-    public LocalDate calcularFechaFin(Reserva reserva) {
-        int dias = reserva.getNumeroDias() - UNO;
-        return reserva.getFechaInicio().plusDays(dias);
-    }
-
-    public Long calcularTarifa(Reserva reserva) {
-        LocalDate fechaCalculo = reserva.getFechaInicio();
-        Long tarifa = Long.valueOf(0);
-        Long tipoTarifa = calculoTarifaTipoVehiculo(reserva);
-
-        for (int i = 0; i < reserva.getNumeroDias(); i++) {
-            if (fechaCalculo.getDayOfWeek() == DayOfWeek.SATURDAY || fechaCalculo.getDayOfWeek() == DayOfWeek.SUNDAY) {
-                tarifa += tipoTarifa + ((30 * tipoTarifa) / 100);
-            } else {
-                tarifa += tipoTarifa;
-            }
-            fechaCalculo = fechaCalculo.plusDays(1);
-        }
-        return tarifa;
-    }
-
-    public Long calculoTarifaTipoVehiculo(Reserva reserva) {
-        Long tipoTarifa;
-
-        switch (reserva.getTipoVehiculo()) {
-            case 1:
-                tipoTarifa = Long.valueOf(VALOR_DIA_AUTOMOVIL);
-                break;
-            case 2:
-                tipoTarifa = Long.valueOf(VALOR_DIA_CAMIONETA);
-                break;
-            case 3:
-                tipoTarifa = Long.valueOf(VALOR_DIA_VAN);
-                break;
-            default:
-                tipoTarifa = Long.valueOf(0);
-        }
-        return tipoTarifa;
     }
 }
