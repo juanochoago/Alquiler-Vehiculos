@@ -66,6 +66,6 @@ public class ReservaTestDataBuilder {
     }
 
     public Reserva build() {
-        return new Reserva(id, idCliente, nombreCliente, tipoVehiculo, fechaInicio, fechaFin, numeroDias, valor);
+        return new Reserva(id, idCliente, nombreCliente, tipoVehiculo, fechaInicio, numeroDias);
     }
 }
