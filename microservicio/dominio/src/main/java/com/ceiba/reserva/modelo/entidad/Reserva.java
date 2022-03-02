@@ -33,7 +33,7 @@ public class Reserva {
     private Integer numeroDias;
     private Long valor;
 
-    public Reserva(Long id, Long idCliente, String nombreCliente, Integer tipoVehiculo, LocalDate fechaInicio, LocalDate fechaFin, Integer numeroDias, Long valor) {
+    public Reserva(Long id, Long idCliente, String nombreCliente, Integer tipoVehiculo, LocalDate fechaInicio, Integer numeroDias) {
         validarObligatorio(idCliente, SE_DEBE_INGRESAR_ID_CLIENTE);
         validarObligatorio(nombreCliente, SE_DEBE_INGRESAR_NOMBRE_CLIENTE);
         validarObligatorio(tipoVehiculo, SE_DEBE_INGRESAR_TIPO_VEHICULO);

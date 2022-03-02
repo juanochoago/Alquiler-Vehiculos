@@ -14,9 +14,7 @@ public class FabricaReserva {
                 comandoReserva.getNombreCliente(),
                 comandoReserva.getTipoVehiculo(),
                 comandoReserva.getFechaInicio(),
-                comandoReserva.getFechaFin(),
-                comandoReserva.getNumeroDias(),
-                comandoReserva.getValor()
+                comandoReserva.getNumeroDias()
         );
     }
 
