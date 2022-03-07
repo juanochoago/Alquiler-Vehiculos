@@ -100,11 +100,9 @@ class ReservaTest {
     @DisplayName("Deberia calcular tarifa Automovil")
     void deberiaCalcularTarifaAutomovil() {
         // arrange
-        Integer tipoVehiculo = 1;
-        Reserva reserva = new ReservaTestDataBuilder().conNumeroDias(1).build();
-        RepositorioReserva repositorioReserva = Mockito.mock(RepositorioReserva.class);
+        Reserva reserva = new ReservaTestDataBuilder().conNumeroDias(1).conTipoVehiculo(1).build();
         // act
-        Long tarifa = reserva.calculoTarifaTipoVehiculo(tipoVehiculo);
+        Long tarifa = reserva.getValor();
         //- assert
         assertEquals(100000L, tarifa);
     }
@@ -113,11 +111,9 @@ class ReservaTest {
     @DisplayName("Deberia calcular tarifa Camioneta")
     void deberiaCalcularTarifaCamioneta() {
         // arrange
-        Integer tipoVehiculo = 2;
-        Reserva reserva = new ReservaTestDataBuilder().conNumeroDias(1).build();
-        RepositorioReserva repositorioReserva = Mockito.mock(RepositorioReserva.class);
+        Reserva reserva = new ReservaTestDataBuilder().conNumeroDias(1).conTipoVehiculo(2).build();
         // act
-        Long tarifa = reserva.calculoTarifaTipoVehiculo(tipoVehiculo);
+        Long tarifa = reserva.getValor();
         //- assert
         assertEquals(150000L, tarifa);
     }
@@ -126,11 +122,9 @@ class ReservaTest {
     @DisplayName("Deberia calcular tarifa Van")
     void deberiaCalcularTarifaVan() {
         // arrange
-        Integer tipoVehiculo = 3;
-        Reserva reserva = new ReservaTestDataBuilder().conNumeroDias(1).build();
-        RepositorioReserva repositorioReserva = Mockito.mock(RepositorioReserva.class);
+        Reserva reserva = new ReservaTestDataBuilder().conNumeroDias(1).conTipoVehiculo(3).build();
         // act
-        Long tarifa = reserva.calculoTarifaTipoVehiculo(tipoVehiculo);
+        Long tarifa = reserva.getValor();
         //- assert
         assertEquals(200000L, tarifa);
     }
@@ -139,10 +133,13 @@ class ReservaTest {
     @DisplayName("No Deberia Calcular Tarifa")
     void noDeberiaCalcularTarifa() {
         // arrange
-        Integer tipoVehiculo = 4;
-        Reserva reserva = new ReservaTestDataBuilder().conNumeroDias(1).build();
+        ReservaTestDataBuilder reservaTestDataBuilder = new ReservaTestDataBuilder().conNumeroDias(1).conTipoVehiculo(4);
+
         // act- assert
-        BasePrueba.assertThrows(() -> reserva.calculoTarifaTipoVehiculo(tipoVehiculo), ExcepcionValorInvalido.class, "Tipo de vehiculo no valido");
+        BasePrueba.assertThrows(() -> {
+                    reservaTestDataBuilder.build();
+                },
+                ExcepcionValorInvalido.class, "Tipo de vehiculo no valido");
     }
 
     @Test
@@ -150,12 +147,9 @@ class ReservaTest {
     void deberiaCalcularTarifaSabado() {
         // arrange
         LocalDate fechaInicio = LocalDate.of(2022, 03, 05);
-        Integer numeroDias = 1;
-        Integer tipoVehiculo = 1;
-        Reserva reserva = new ReservaTestDataBuilder().build();
-
+        Reserva reserva = new ReservaTestDataBuilder().conFechaInicio(fechaInicio).conNumeroDias(1).conTipoVehiculo(1).build();
         // act
-        Long tarifa = reserva.calcularTarifa(fechaInicio, numeroDias, tipoVehiculo);
+        Long tarifa = reserva.getValor();
         //- assert
         assertEquals(130000L, tarifa);
     }
@@ -165,12 +159,9 @@ class ReservaTest {
     void deberiaCalcularTarifaDomingo() {
         // arrange
         LocalDate fechaInicio = LocalDate.of(2022, 03, 06);
-        Integer numeroDias = 1;
-        Integer tipoVehiculo = 1;
-        Reserva reserva = new ReservaTestDataBuilder().build();
-
+        Reserva reserva = new ReservaTestDataBuilder().conFechaInicio(fechaInicio).conNumeroDias(1).conTipoVehiculo(1).build();
         // act
-        Long tarifa = reserva.calcularTarifa(fechaInicio, numeroDias, tipoVehiculo);
+        Long tarifa = reserva.getValor();
         //- assert
         assertEquals(130000L, tarifa);
     }
@@ -180,13 +171,10 @@ class ReservaTest {
     void deberiaCalcularTarifaEntreSemana() {
         // arrange
         LocalDate fechaInicio = LocalDate.of(2022, 03, 07);
-        Integer numeroDias = 1;
-        Integer tipoVehiculo = 1;
-        Reserva reserva = new ReservaTestDataBuilder().build();
-
+        Reserva reserva = new ReservaTestDataBuilder().conFechaInicio(fechaInicio).conNumeroDias(2).conTipoVehiculo(1).build();
         // act
-        Long tarifa = reserva.calcularTarifa(fechaInicio, numeroDias, tipoVehiculo);
+        Long tarifa = reserva.getValor();
         //- assert
-        assertEquals(100000L, tarifa);
+        assertEquals(200000L, tarifa);
     }
 }

@@ -15,7 +15,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -45,7 +44,7 @@ class ComandoControladorReservaTest {
     }
 
     @Test
-    @DisplayName("Deberia actualizar uan reserva")
+    @DisplayName("Deberia actualizar una reserva")
     void deberiaActualizarUnaReserva() throws Exception {
         // arrange
         Long id = 1L;
@@ -57,4 +56,28 @@ class ComandoControladorReservaTest {
                 .andExpect(status().isOk());
     }
 
+    @Test
+    @DisplayName("Deberia no crear una reserva")
+    void deberiaNoCrearUnaReserva() throws Exception{
+        // arrange
+        ComandoReserva reserva = new ComandoReservaTestDataBuilder().conTipoVehiculo(null).build();
+        // act - assert
+        mocMvc.perform(post("/vehiculo")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(reserva)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("Deberia no actualizar una reserva")
+    void deberiaNoActualizarUnUsuario() throws Exception{
+        // arrange
+        Long id = 7L;
+        ComandoReserva reserva = new ComandoReservaTestDataBuilder().build();
+        // act - assert
+        mocMvc.perform(put("/vehiculo/{id}",id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(reserva)))
+                .andExpect(status().isBadRequest());
+    }
 }

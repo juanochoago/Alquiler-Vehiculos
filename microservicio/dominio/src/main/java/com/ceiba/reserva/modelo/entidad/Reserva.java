@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import static com.ceiba.dominio.ValidadorArgumento.validarObligatorio;
 
 @Getter
-@Setter
 public class Reserva {
 
     private static final String SE_DEBE_INGRESAR_ID_CLIENTE = "Se debe ingresar el id del cliente";
@@ -50,28 +49,14 @@ public class Reserva {
         this.valor = calcularTarifa(fechaInicio,numeroDias,tipoVehiculo);
     }
 
-    public LocalDate calcularFechaFin(LocalDate fechaInicio, Integer numeroDias) {
+    private LocalDate calcularFechaFin(LocalDate fechaInicio, Integer numeroDias) {
         int dias = numeroDias - UNO;
         return fechaInicio.plusDays(dias);
     }
 
-    public Long calcularTarifa(LocalDate fechaInicio, Integer numeroDias, Integer tipoVehiculo) {
+    private Long calcularTarifa(LocalDate fechaInicio, Integer numeroDias, Integer tipoVehiculo) {
         LocalDate fechaCalculo = fechaInicio;
         Long tarifa = Long.valueOf(0);
-        Long tipoTarifa = calculoTarifaTipoVehiculo(tipoVehiculo);
-
-        for (int i = 0; i < numeroDias; i++) {
-            if (fechaCalculo.getDayOfWeek() == DayOfWeek.SATURDAY || fechaCalculo.getDayOfWeek() == DayOfWeek.SUNDAY) {
-                tarifa += tipoTarifa + ((30 * tipoTarifa) / 100);
-            } else {
-                tarifa += tipoTarifa;
-            }
-            fechaCalculo = fechaCalculo.plusDays(1);
-        }
-        return tarifa;
-    }
-
-    public Long calculoTarifaTipoVehiculo(Integer tipoVehiculo) {
         Long tipoTarifa;
 
         switch (tipoVehiculo) {
@@ -87,7 +72,16 @@ public class Reserva {
             default:
                 throw new ExcepcionValorInvalido(TIPO_VEHICULO_INVALIDO);
         }
-        return tipoTarifa;
+
+        for (int i = 0; i < numeroDias; i++) {
+            if (fechaCalculo.getDayOfWeek() == DayOfWeek.SATURDAY || fechaCalculo.getDayOfWeek() == DayOfWeek.SUNDAY) {
+                tarifa += tipoTarifa + ((30 * tipoTarifa) / 100);
+            } else {
+                tarifa += tipoTarifa;
+            }
+            fechaCalculo = fechaCalculo.plusDays(1);
+        }
+        return tarifa;
     }
 
 }
